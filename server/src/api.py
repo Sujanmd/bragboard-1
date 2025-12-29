@@ -42,6 +42,7 @@ def log_registered_routes():
 origins = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "https://bragboard-1-1.onrender.com"
 ]
 
 # Enable CORS
