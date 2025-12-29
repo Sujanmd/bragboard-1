@@ -1,10 +1,9 @@
 
-const API_BASE =
-  process.env.REACT_APP_API_BASE || "http://127.0.0.1:8000";
+const API_BASE_URL = process.env.REACT_APP_API_URL;
 
 // Generic request helper
 async function request(path, options = {}) {
-  const resp = await fetch(API_BASE + path, {
+  const resp = await fetch(API_BASE_URL + path, {
     credentials: "include", // allows cookies if backend sets them
     headers: {
       "Content-Type": "application/json",

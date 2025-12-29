@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "../index.css";   // IMPORTANT: correct path
 
-const API = "http://127.0.0.1:8000";
+const API_BASE_URL = process.env.REACT_APP_API_URL;
 
 export default function EmployeeReportingShoutout() {
   const employeeId = 101;
@@ -13,7 +13,7 @@ export default function EmployeeReportingShoutout() {
 
   const loadShoutouts = async () => {
     try {
-      const res = await axios.get(`${API}/shoutouts/${employeeId}`);
+      const res = await axios.get(`${API_BASE_URL}/shoutouts/${employeeId}`);
       setShoutouts(res.data);
     } catch (err) {
       console.error("Failed to load shoutouts", err);
@@ -24,7 +24,7 @@ export default function EmployeeReportingShoutout() {
     if (!content || !reason) return;
 
     try {
-      await axios.post(`${API}/shoutouts`, {
+      await axios.post(`${API_BASE_URL}/shoutouts`, {
         employee_id: employeeId,
         title: content,
         description: reason,

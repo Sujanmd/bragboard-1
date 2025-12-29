@@ -1,4 +1,4 @@
-const API_URL = "http://127.0.0.1:8000/shoutouts";
+const API_BASE_URL = process.env.REACT_APP_API_URL + "/shoutouts";
 
 export async function getAllShoutouts() {
   const res = await fetch(API_URL);
