@@ -38,7 +38,7 @@ class LoginRequest(BaseModel):
 def register(user: UserCreate, db: Session = Depends(get_db)):
     existing_user = db.query(User).filter(User.email == user.email).first()
     if existing_user:
-        raise HTTPException(400, "Email already registered")
+        raise HTTPException(409, "Email already registered")
 
     hashed_pwd = hash_password(user.password)
     otp = generate_otp()
