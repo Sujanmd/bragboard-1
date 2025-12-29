@@ -1,15 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 
 function ApprovalRequests() {
   const [users, setUsers] = useState([]);
   const token = localStorage.getItem("access_token");
 
-  useEffect(() => {
-    fetchPendingUsers();
-  }, []);
-
-  const fetchPendingUsers = async () => {
+  const fetchPendingUsers = useCallback(async () => {
     try {
       const res = await axios.get(
         "http://localhost:8000/admin/users/pending",
@@ -39,7 +35,13 @@ function ApprovalRequests() {
         alert("Failed to load pending approvals");
       }
     }
-  };
+  }, [token]);
+
+
+  useEffect(() => {
+    fetchPendingUsers();
+  }, [fetchPendingUsers]);
+
 
   const approveUser = async (id) => {
     try {

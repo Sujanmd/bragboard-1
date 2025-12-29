@@ -1,3 +1,9 @@
+import sys
+import os
+
+# Add the current directory (src) to sys.path
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from src.database import Base, engine

@@ -8,7 +8,6 @@ export default function BrandBadge({ text = "BragBoard", href = "/" }) {
       href={href}
       className="brand-badge"
       aria-label={`${text} - go to home`}
-      role="link"
     >
       {text}
     </a>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { getJson, postJson } from "../../lib/api";
 import { EMPLOYEES, SHOUTOUTS, getEmployeeName } from "../../data/constants";
 
@@ -21,16 +21,8 @@ export default function Shoutouts() {
   const [commentsByShoutout, setCommentsByShoutout] = useState({});
   const [newComment, setNewComment] = useState({});
 
-  // Debug: Log state changes
-  useEffect(() => {
-    console.log("Comments state updated:", commentsByShoutout);
-  }, [commentsByShoutout]);
 
-  useEffect(() => {
-    loadShoutouts();
-  }, []);
-
-  const loadShoutouts = async () => {
+  const loadShoutouts = useCallback(async () => {
     try {
       setLoading(true);
       const response = await getJson("/shoutouts");
@@ -67,7 +59,17 @@ export default function Shoutouts() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    console.log("Comments state updated:", commentsByShoutout);
+  }, [commentsByShoutout]);
+
+  useEffect(() => {
+    loadShoutouts();
+  }, [loadShoutouts]);
+
+
 
   const toggleRecipient = (name) =>
     setRecipients((prev) =>
@@ -85,7 +87,7 @@ export default function Shoutouts() {
 
     try {
       const name = recipients.join(", ");
-      const response = await postJson("/shoutouts", { name, message });
+      await postJson("/shoutouts", { name, message });
       setRecipients([]);
       setMessage("");
       await loadShoutouts();

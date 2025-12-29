@@ -1,12 +1,9 @@
-import { Link } from "react-router-dom";
 import {
   DEPARTMENTS,
   EMPLOYEES,
   SHOUTOUTS,
   getEmployeeName,
-  LEADERBOARD,
 } from "../../data/constants";
-import ShoutoutsPage from "../Common/ShoutOuts";
 function DashboardOverview() {
   const recent = [...SHOUTOUTS]
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))

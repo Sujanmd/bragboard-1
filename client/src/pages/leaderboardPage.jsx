@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import LeaderboardTable from '../features/leaderboard/components/LeaderboardTable';
 import DepartmentStats from '../features/leaderboard/components/DepartmentStats';
 import RecentHighlights from '../features/leaderboard/components/RecentHighlights';
@@ -13,11 +13,8 @@ const LeaderboardPage = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    useEffect(() => {
-        fetchLeaderboardData();
-    }, [rangeType]);
 
-    const fetchLeaderboardData = async () => {
+    const fetchLeaderboardData = useCallback(async () => {
         setLoading(true);
 
         try {
@@ -40,7 +37,13 @@ const LeaderboardPage = () => {
         } finally {
             setLoading(false);
         }
-    };
+    }, [rangeType]);
+
+    useEffect(() => {
+        fetchLeaderboardData();
+    }, [rangeType, fetchLeaderboardData]);
+
+
 
     const handleUserClick = (user) => {
         alert(`🏆 ${user.name}\nRank: #${user.rank}\nDepartment: ${user.department}\nScore: ${user.score}`);
@@ -60,7 +63,7 @@ const LeaderboardPage = () => {
     return (
         <div className="min-h-screen bg-gradient-to-b from-gray-50 to-blue-50 py-8">
             <div className="container mx-auto px-4">
-                
+
                 {/* Header */}
                 <div className="text-center mb-10">
                     <div className="inline-block p-4 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full mb-4">
@@ -81,9 +84,9 @@ const LeaderboardPage = () => {
                 )}
 
                 {/* Filters */}
-                <LeaderboardFilters 
-                    rangeType={rangeType} 
-                    onRangeChange={setRangeType} 
+                <LeaderboardFilters
+                    rangeType={rangeType}
+                    onRangeChange={setRangeType}
                 />
 
                 {/* Stats Overview */}
@@ -113,8 +116,8 @@ const LeaderboardPage = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     {/* Leaderboard */}
                     <div className="lg:col-span-2">
-                        <LeaderboardTable 
-                            data={topPerformers} 
+                        <LeaderboardTable
+                            data={topPerformers}
                             onUserClick={handleUserClick}
                         />
                     </div>

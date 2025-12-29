@@ -67,8 +67,8 @@ function ShoutoutCard({ shoutout, isTrash, onDeleteClick, onRestore, userMap }) 
   return (
     <article
       className={`relative flex gap-4 rounded-xl border px-4 py-3 transition ${isTrash
-          ? "border-orange-200 bg-orange-50/80 hover:border-orange-300 hover:bg-orange-50"
-          : "border-slate-100 bg-slate-50 hover:border-indigo-200 hover:bg-indigo-50/40"
+        ? "border-orange-200 bg-orange-50/80 hover:border-orange-300 hover:bg-orange-50"
+        : "border-slate-100 bg-slate-50 hover:border-indigo-200 hover:bg-indigo-50/40"
         }`}
     >
       {/* Buttons */}
@@ -286,7 +286,7 @@ function ShoutoutsPage() {
         console.error("Failed to restore", res.status);
         return;
       }
-      const restoredShoutout = await res.json();
+      await res.json();
       setItems((prev) =>
         prev.map((item) =>
           item.id === id ? { ...item, deletedAt: null } : item
@@ -323,8 +323,8 @@ function ShoutoutsPage() {
             <button
               onClick={() => setActiveTab("active")}
               className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${activeTab === "active"
-                  ? "bg-white shadow-sm text-slate-900 border border-slate-200"
-                  : "text-slate-500 hover:text-slate-700 hover:bg-slate-200"
+                ? "bg-white shadow-sm text-slate-900 border border-slate-200"
+                : "text-slate-500 hover:text-slate-700 hover:bg-slate-200"
                 }`}
             >
               Active ({activeItems.length})
@@ -332,8 +332,8 @@ function ShoutoutsPage() {
             <button
               onClick={() => setActiveTab("trash")}
               className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${activeTab === "trash"
-                  ? "bg-white shadow-sm text-slate-900 border border-slate-200"
-                  : "text-slate-500 hover:text-slate-700 hover:bg-slate-200"
+                ? "bg-white shadow-sm text-slate-900 border border-slate-200"
+                : "text-slate-500 hover:text-slate-700 hover:bg-slate-200"
                 }`}
             >
               Trash ({trashItems.length})

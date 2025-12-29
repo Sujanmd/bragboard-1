@@ -1,5 +1,5 @@
 // src/App.js
-import React, { useState } from "react";
+import React from "react";
 import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
 
 import { AuthProvider } from "./lib/authContext";
