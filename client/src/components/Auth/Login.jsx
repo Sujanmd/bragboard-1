@@ -1,5 +1,6 @@
 // src/components/Auth/Login.jsx
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import Input from "../Common/Input";
 import "../../styles/auth.css";
 import { postJson } from "../../lib/api";
@@ -120,9 +121,9 @@ export default function Login({ onLogin }) {
           </button>
 
           <div className="small-link">
-            <a href="/forgot-password" style={{ color: "var(--muted)" }}>
+            <Link to="/forgot-password" style={{ color: "var(--muted)" }}>
               Forgot password ?
-            </a>
+            </Link>
           </div>
 
           <div style={{ height: 18 }} />
@@ -154,7 +155,7 @@ export default function Login({ onLogin }) {
 
           <div className="auth-footer">
             <div>
-              Don't have an account ? <a href="/register">Signup</a>
+              Don't have an account ? <Link to="/register">Signup</Link>
             </div>
           </div>
         </form>

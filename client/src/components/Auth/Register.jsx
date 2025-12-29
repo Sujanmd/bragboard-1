@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Input from "../Common/Input";
 import "../../styles/auth.css";
-import { postJson } from "../../lib/api";   
+import { postJson } from "../../lib/api";
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -48,7 +48,7 @@ export default function Signup() {
 
     setLoading(true);
     try {
-      
+
       const { status, data } = await postJson("/register/", {
         email: form.email,
         password: form.password,
@@ -59,25 +59,25 @@ export default function Signup() {
 
       if (status === 200 || status === 201) {
         setOk("Account created — please check email for verification code.");
-        
+
         navigate("/verify-otp", { state: { email: form.email } });
       } else if (status === 409) {
-        
+
         setErr(data?.detail || "An account with this email already exists.");
-      }  else {
-  // FastAPI 422: detail is usually an array of error objects
-  let message = "Failed to send OTP.";
+      } else {
+        // FastAPI 422: detail is usually an array of error objects
+        let message = "Failed to send OTP.";
 
-  if (Array.isArray(data?.detail) && data.detail.length > 0) {
-    message = data.detail[0]?.msg || message;
-  } else if (typeof data?.detail === "string") {
-    message = data.detail;
-  } else if (data?.message) {
-    message = data.message;
-  }
+        if (Array.isArray(data?.detail) && data.detail.length > 0) {
+          message = data.detail[0]?.msg || message;
+        } else if (typeof data?.detail === "string") {
+          message = data.detail;
+        } else if (data?.message) {
+          message = data.message;
+        }
 
-  setErr(message);
-}
+        setErr(message);
+      }
     } catch (e) {
       console.error(e);
       setErr("Network/server error. Try again.");
@@ -134,10 +134,10 @@ export default function Signup() {
           />
 
           {err && (
-  <div className="error" role="alert">
-    {String(err)}
-  </div>
-)}
+            <div className="error" role="alert">
+              {String(err)}
+            </div>
+          )}
 
           {ok && <div className="success" role="status">{ok}</div>}
 
@@ -154,7 +154,7 @@ export default function Signup() {
           </div>
 
           <div className="auth-footer" style={{ marginTop: 18 }}>
-            <div>Already have an account ? <a href="/login">login</a></div>
+            <div>Already have an account ? <Link to="/login">login</Link></div>
           </div>
         </form>
       </div>
