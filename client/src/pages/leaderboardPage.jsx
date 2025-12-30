@@ -16,14 +16,15 @@ const LeaderboardPage = () => {
 
     const fetchLeaderboardData = useCallback(async () => {
         setLoading(true);
+        const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
 
         try {
             const [performersResponse, statsResponse, highlightsResponse] = await Promise.all([
-                axios.get('http://localhost:8000/api/leaderboard/top-performers', {
+                axios.get(`${API_URL}/api/leaderboard/top-performers`, {
                     params: { range_type: rangeType }
                 }),
-                axios.get('http://localhost:8000/api/leaderboard/department-stats'),
-                axios.get('http://localhost:8000/api/leaderboard/recent-highlights')
+                axios.get(`${API_URL}/api/leaderboard/department-stats`),
+                axios.get(`${API_URL}/api/leaderboard/recent-highlights`)
             ]);
 
             setTopPerformers(performersResponse.data || []);

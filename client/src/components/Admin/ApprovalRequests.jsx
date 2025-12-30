@@ -4,11 +4,12 @@ import axios from "axios";
 function ApprovalRequests() {
   const [users, setUsers] = useState([]);
   const token = localStorage.getItem("access_token");
+  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
 
   const fetchPendingUsers = useCallback(async () => {
     try {
       const res = await axios.get(
-        "http://localhost:8000/admin/users/pending",
+        `${API_URL}/admin/users/pending`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -31,8 +32,11 @@ function ApprovalRequests() {
         alert("Session expired. Please login again.");
         localStorage.removeItem("access_token");
         window.location.href = "/login";
+      } else if (err.response?.status === 403) {
+        alert("Access Denied: You do not have permission to view this page.");
       } else {
-        alert("Failed to load pending approvals");
+        const errorMsg = err.response?.data?.detail || "Failed to load pending approvals";
+        alert(`Error: ${errorMsg}`);
       }
     }
   }, [token]);
@@ -46,7 +50,7 @@ function ApprovalRequests() {
   const approveUser = async (id) => {
     try {
       await axios.post(
-        `http://localhost:8000/admin/users/${id}/approve`,
+        `${API_URL}/admin/users/${id}/approve`,
         {},
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -62,7 +66,7 @@ function ApprovalRequests() {
   const rejectUser = async (id) => {
     try {
       await axios.post(
-        `http://localhost:8000/admin/users/${id}/reject`,
+        `${API_URL}/admin/users/${id}/reject`,
         {},
         {
           headers: { Authorization: `Bearer ${token}` },

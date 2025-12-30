@@ -208,7 +208,7 @@ export default function Shoutouts() {
   const removeComment = async (shoutoutId, commentId) => {
     try {
       // Call API to delete comment
-      await fetch(`http://localhost:8000/shoutouts/comments/${commentId}?user_id=${CURRENT_USER_ID}`, {
+      await fetch(`${process.env.REACT_APP_API_URL || "http://localhost:8000"}/shoutouts/comments/${commentId}?user_id=${CURRENT_USER_ID}`, {
         method: "DELETE",
       });
 

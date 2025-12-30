@@ -18,8 +18,10 @@ function LoginPage({ onLogin }) {
     setError("");
     setLoading(true);
 
+    const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
+
     try {
-      const res = await axios.post("http://localhost:8000/login/", {
+      const res = await axios.post(`${API_URL}/login/`, {
         email,
         password,
       });
